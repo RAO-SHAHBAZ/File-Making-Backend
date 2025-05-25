@@ -28,6 +28,18 @@ app.post('/create',(req,res,next)=>{
     })
 })
 
+app.post('/delete/:filename', (req, res) => {
+  const filepath = path.join(__dirname, 'files', req.params.filename);
+  fs.unlink(filepath, (err) => {
+    if (err) {
+      console.error("Deletion error:", err);
+      return res.status(500).send("Error deleting the file.");
+    }
+    res.redirect('/');
+  });
+});
+
+
 app.listen(3000, ()=>{
     console.log("Server IS  Running");
     
